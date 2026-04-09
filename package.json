@@ -1,0 +1,17 @@
+{
+  "name": "playwright-gad-e2e",
+  "version": "1.0.0",
+  "description": "Playwright E2E tests with TypeScript and Page Object Model for GAD demo application",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@playwright/test": "^1.59.1",
+    "@types/node": "^25.5.2",
+    "typescript": "^6.0.2"
+  }
+}
