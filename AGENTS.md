@@ -8,6 +8,14 @@ Example layout:
 `pages/LoginPage.ts`
 `test-data/users.json`
 
+The application under test is located in a separate local repository:
+Playwright/gad-gui-api-demo
+
+When creating or updating tests:
+- always inspect the app source code first
+- verify data-testid, href, form field names, and DOM structure in the app repo
+- do not guess selectors
+
 ## Build, Test, and Development Commands
 Install dependencies with `npm install`.
 
@@ -36,3 +44,74 @@ PRs should include a brief summary, the app state or environment assumed by the 
 
 ## Configuration & Security Tips
 Do not commit `.env` files, credentials, or local report artifacts. If the app URL changes, update `baseURL` in `playwright.config.ts` rather than hardcoding hosts inside tests.
+
+## Documentation
+This project is driven by:
+
+- `docs/test-roadmap.md`
+- `docs/mvp-scope.md` (source of truth)
+- `docs/pom-plan.md`
+
+Agents MUST read these documents before implementing anything. Treat `docs/mvp-scope.md` as the scope boundary and primary implementation reference when there is any ambiguity.
+
+## Agent Rules (IMPORTANT)
+- Always follow the MVP scope.
+- Do not implement anything outside the current MVP scope unless explicitly asked.
+- Respect the Page Object Model structure defined in `docs/pom-plan.md`.
+- Do not create unnecessary Page Objects.
+- Do not modify existing Page Objects without a clear reason tied to the current scenario or maintainability improvement.
+
+## Selector rules
+- Agents MUST verify selectors against the GAD app repo before writing or changing tests.
+- Do not guess selectors.
+- Prefer selectors based on `data-testid`, `name`, `id`, and stable `href` values.
+- Avoid text-based selectors when a more stable attribute exists.
+- Avoid fragile CSS selectors tied to layout, position, or styling.
+
+## Test design rules
+- One test = one behavior.
+- Keep tests independent and runnable in isolation.
+- Avoid chaining long flows across multiple modules in a single test.
+- Prefer readability over clever reuse.
+- Keep setup clear and minimal for each scenario.
+
+## Page Object rules
+- Use explicit methods that describe user intent. Do not hide unrelated navigation behind generic methods such as `openModule`.
+- Do not over-abstract simple interactions.
+- Keep assertions out of Page Objects unless the assertion is clearly reusable and page-specific.
+- Keep Page Objects focused on page behavior, navigation, and stable interactions.
+
+## Anti-patterns to avoid
+- Do not generate full suites at once.
+- Do not introduce a `BasePage` unless there is a clear, repeated need.
+- Do not mix API logic into Page Objects.
+- Do not hardcode test data inside Page Objects.
+- Do not use `waitForTimeout` unless there is no practical stable alternative.
+
+## Environment assumptions
+- The app under test runs at `http://localhost:3000`.
+- The app lives in a separate repo: `Playwright/gad-gui-api-demo`.
+- Tests rely on seeded data being available and stable.
+
+## Execution model
+Work should be performed incrementally:
+- Implement one scenario at a time
+- Create only the Page Objects required for that scenario
+- Run and verify tests before moving to the next scenario
+- Do not implement multiple scenarios in a single step
+
+## Playwright MCP (optional)
+
+If Playwright MCP tools are available in the environment, they may be used to assist with:
+
+- inspecting the DOM structure
+- exploring page elements
+- validating selectors
+
+However:
+
+- MCP MUST NOT replace reading the application source code
+- MCP MUST NOT be used to guess selectors without verification
+- Selectors generated via MCP MUST be validated against the GAD app repository
+
+Use MCP as a helper, not as the source of truth.
