@@ -86,3 +86,59 @@ The following areas should stay out of the MVP to avoid unnecessary test fragili
 - Avoid chaining complex cross-module flows in a single test. Portfolio value is higher when each scenario is readable and independently explainable.
 - Treat deferred scenarios as deliberate non-goals for the MVP, not as missing work.
 - If `docs/test-roadmap.md` is later added or renamed, this file should still remain the narrower implementation scope rather than a duplicate roadmap.
+
+## 7. MVP test coverage tracker (split into smaller steps)
+
+Use this as the single checklist for what should be covered by tests in the MVP batch.
+
+### 7.1 Implemented now
+
+- [x] App Shell: home page loads and default module cards are visible.
+
+### 7.2 Next public smoke tests (no auth required)
+
+- [ ] App Shell: default module cards are navigable to their target modules.
+- [ ] Community / Articles: articles list loads.
+- [ ] Community / Articles: one article detail page opens successfully.
+- [ ] Book Shop: catalog page loads for anonymous user.
+- [ ] Book Shop: basic search controls render correctly.
+- [ ] Book Shop: basic sort controls render correctly.
+- [ ] Learning: welcome page loads for guest user.
+- [ ] Learning: public course catalog loads for guest user.
+- [ ] Practice Pages: index loads.
+- [ ] Practice Pages: category navigation/filtering works.
+- [ ] Games: games index loads.
+- [ ] Games: core game navigation works.
+- [ ] Operational: version page loads.
+- [ ] Operational: version/build information is visible.
+
+### 7.3 Core authentication tests
+
+- [ ] Auth: register a new main-app user via public registration.
+- [ ] Auth: login with seeded main-app user.
+- [ ] Auth: authenticated navigation is shown after login.
+- [ ] Auth: logout from authenticated session.
+- [ ] Auth: session returns to guest state after logout.
+- [ ] Auth Validation: incorrect credentials show a clear error state.
+
+### 7.4 Seeded authenticated module smoke
+
+- [ ] Book Shop: seeded customer opens Account page.
+- [ ] Book Shop: seeded customer opens Orders page.
+- [ ] Learning: seeded student logs in.
+- [ ] Learning: seeded student reaches an enrolled course viewer.
+
+### 7.5 Lightweight create and representative interaction tests
+
+- [ ] Community / Flashposts: authenticated user creates a simple flashpost.
+- [ ] Community / Flashposts: newly created flashpost entry is rendered.
+- [ ] Practice Pages / Drag and Drop: representative page completes core happy path.
+- [ ] Practice Pages / IFrame: representative iframe page is accessible.
+- [ ] Practice Pages / IFrame: representative iframe interactions succeed.
+- [ ] Practice Pages / Modal or Popup: representative popup/modal success path completes.
+- [ ] Games / Quiz: one clean quiz happy-path run completes.
+
+### 7.6 Deferred (not part of first MVP batch unless promoted later)
+
+- [ ] Practice Pages Validation: representative form required-field or format validation.
+- [ ] Book Shop / Orders: customer creates and submits an order end to end.

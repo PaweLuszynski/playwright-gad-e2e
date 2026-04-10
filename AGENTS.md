@@ -21,6 +21,10 @@ Install dependencies with `npm install`.
 
 Run the Chromium suite with `npx playwright test`. The config currently targets `chromium`, runs tests from `tests/`, and expects the app under test at `http://localhost:3000`.
 
+Before running any Playwright tests, start the app under test from the separate `gad-gui-api-demo` repository (for example, `npm run start`) and verify it is reachable on `http://localhost:3000`.
+
+When asked to run tests, execute all currently available Playwright tests in this repo unless the user explicitly asks for a narrower scope (single file or grep filter).
+
 Open the last HTML report with `npx playwright show-report`.
 
 Type-check support files with `npx tsc --noEmit`.
