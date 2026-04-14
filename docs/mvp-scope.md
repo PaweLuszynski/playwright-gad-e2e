@@ -94,12 +94,12 @@ Use this as the single checklist for what should be covered by tests in the MVP 
 ### 7.1 Implemented now
 
 - [x] App Shell: home page loads and default module cards are visible.
+- [x] App Shell: default module cards are navigable to their target modules.
+- [x] Community / Articles: articles list loads.
+- [x] Community / Articles: one article detail page opens successfully.
 
 ### 7.2 Next public smoke tests (no auth required)
 
-- [ ] App Shell: default module cards are navigable to their target modules.
-- [ ] Community / Articles: articles list loads.
-- [ ] Community / Articles: one article detail page opens successfully.
 - [ ] Book Shop: catalog page loads for anonymous user.
 - [ ] Book Shop: basic search controls render correctly.
 - [ ] Book Shop: basic sort controls render correctly.
