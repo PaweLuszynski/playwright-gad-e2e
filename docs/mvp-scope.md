@@ -100,8 +100,8 @@ Use this as the single checklist for what should be covered by tests in the MVP 
 
 ### 7.2 Next public smoke tests (no auth required)
 
-- [ ] Book Shop: catalog page loads for anonymous user.
-- [ ] Book Shop: basic search controls render correctly.
+- [x] Book Shop: catalog page loads for anonymous user.
+- [x] Book Shop: basic search controls render correctly.
 - [ ] Book Shop: basic sort controls render correctly.
 - [ ] Learning: welcome page loads for guest user.
 - [ ] Learning: public course catalog loads for guest user.
