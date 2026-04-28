@@ -21,9 +21,9 @@ Install dependencies with `npm install`.
 
 Run the Chromium suite with `npx playwright test`. The config currently targets `chromium`, runs tests from `tests/`, and expects the app under test at `http://localhost:3000`.
 
-Before running any Playwright tests, start the app under test from the separate `gad-gui-api-demo` repository (for example, `npm run start`) and verify it is reachable on `http://localhost:3000`.
+Before running any Playwright tests, start the app under test from the separate `gad-gui-api-demo` repository and verify it is reachable on `http://localhost:3000`.
 
-When asked to run tests, execute all currently available Playwright tests in this repo unless the user explicitly asks for a narrower scope (single file or grep filter).
+When asked to run tests, execute all currently available Playwright tests in this repo unless the user explicitly asks for a narrower scope.
 
 Open the last HTML report with `npx playwright show-report`.
 
@@ -69,6 +69,7 @@ Agents MUST read these documents before implementing anything. Treat `docs/mvp-s
 - Agents MUST verify selectors against the GAD app repo before writing or changing tests.
 - Do not guess selectors.
 - Prefer selectors based on `data-testid`, `name`, `id`, and stable `href` values.
+- Prefer role-based selectors only when they are stable and language-independent.
 - Avoid text-based selectors when a more stable attribute exists.
 - Avoid fragile CSS selectors tied to layout, position, or styling.
 
@@ -78,6 +79,8 @@ Agents MUST read these documents before implementing anything. Treat `docs/mvp-s
 - Avoid chaining long flows across multiple modules in a single test.
 - Prefer readability over clever reuse.
 - Keep setup clear and minimal for each scenario.
+- Assertions should verify visible user outcomes, not implementation details.
+- Avoid over-asserting.
 
 ## Page Object rules
 - Use explicit methods that describe user intent. Do not hide unrelated navigation behind generic methods such as `openModule`.
@@ -99,13 +102,17 @@ Agents MUST read these documents before implementing anything. Treat `docs/mvp-s
 
 ## Execution model
 Work should be performed incrementally:
-- Implement one scenario at a time
-- Create only the Page Objects required for that scenario
-- Run and verify tests before moving to the next scenario
-- Do not implement multiple scenarios in a single step
+- Implement one scenario at a time.
+- Create only the Page Objects required for that scenario.
+- Run and verify tests before moving to the next scenario.
+- Do not implement multiple scenarios in a single step.
+
+## Handling uncertainty
+- If a selector, flow, or behavior cannot be verified from the app source code, do not guess.
+- Add a TODO comment and proceed only with the parts that can be verified.
+- Clearly report any assumptions or blockers.
 
 ## Playwright MCP (optional)
-
 If Playwright MCP tools are available in the environment, they may be used to assist with:
 
 - inspecting the DOM structure
@@ -114,8 +121,125 @@ If Playwright MCP tools are available in the environment, they may be used to as
 
 However:
 
-- MCP MUST NOT replace reading the application source code
-- MCP MUST NOT be used to guess selectors without verification
-- Selectors generated via MCP MUST be validated against the GAD app repository
+- MCP MUST NOT replace reading the application source code.
+- MCP MUST NOT be used to guess selectors without verification.
+- Selectors generated via MCP MUST be validated against the GAD app repository.
 
 Use MCP as a helper, not as the source of truth.
+
+## Git workflow rules
+All changes must follow a controlled Git workflow.
+
+- Always create a new branch for any change:
+  - `feature/<short-description>`
+  - `fix/<short-description>`
+  - `test/<short-description>`
+
+- Never commit directly to `main`.
+
+- Keep commits small and focused:
+  - one scenario per branch
+  - one logical change per commit
+
+- Commit messages must be:
+  - short
+  - imperative
+  - descriptive
+
+Examples:
+- `Add AppShellPage and home page smoke test`
+- `Fix login selector using data-testid`
+- `Refactor ArticlesPage locators`
+
+- Before pushing:
+  - run `npx playwright test`
+  - run `npx tsc --noEmit`
+  - ensure no unintended failures
+
+- After pushing:
+  - create a Pull Request to `main`
+
+## Pull Request rules
+Each Pull Request must:
+
+- target the `main` branch
+- include a clear description:
+  - what scenario was implemented
+  - what files were added or changed
+  - how it was verified
+
+- stay small and focused:
+  - one scenario per PR is preferred
+
+- include test results:
+  - mention if tests passed locally
+  - include report details only if needed
+
+- avoid mixing:
+  - multiple features
+  - refactor + new tests in one PR
+  - unrelated formatting changes
+
+Agents MUST NOT:
+- open large multi-scenario PRs
+- include unrelated changes
+- merge PRs without user approval
+
+## Agent review checklist (MANDATORY)
+
+Before finishing any task, the agent MUST verify:
+
+### Scope
+- Is the implementation within MVP scope?
+- Is only one scenario implemented?
+
+### Selectors
+- Were selectors verified in the GAD repo?
+- Are selectors stable and not fragile?
+- Are text-based selectors avoided where possible?
+
+### POM structure
+- Are selectors inside Page Objects?
+- Are methods explicit and readable?
+- Is there no unnecessary abstraction?
+
+### Test quality
+- Does the test cover exactly one behavior?
+- Is the test readable?
+- Are assertions meaningful and user-facing?
+
+### Stability
+- No `waitForTimeout` used?
+- Proper Playwright waiting is used through locators and expectations?
+- No flaky timing or animation-dependent patterns?
+
+### Git discipline
+- Only relevant files changed?
+- No generated artifacts included?
+- Commit message is correct?
+
+If any of the above fails:
+- fix before completing the task.
+
+## Output expectations for agents
+
+When implementing a scenario, the agent MUST clearly list:
+
+- created files
+- modified files
+- commands run
+- test results
+
+The agent MUST briefly explain:
+
+- what was implemented
+- why this approach was chosen
+- what selectors were used and how they were verified
+
+The agent MUST highlight:
+
+- any assumptions made
+- any TODOs added due to missing information
+- any known risks or follow-up work
+
+Do not return only code without context.
