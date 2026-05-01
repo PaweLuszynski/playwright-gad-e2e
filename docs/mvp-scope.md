@@ -104,7 +104,7 @@ Use this as the single checklist for what should be covered by tests in the MVP 
 - [x] Book Shop: basic search controls render correctly.
 - [x] Book Shop: basic sort controls render correctly.
 - [x] Learning: welcome page loads for guest user.
-- [ ] Learning: public course catalog loads for guest user.
+- [x] Learning: public course catalog loads for guest user.
 - [ ] Practice Pages: index loads.
 - [ ] Practice Pages: category navigation/filtering works.
 - [ ] Games: games index loads.

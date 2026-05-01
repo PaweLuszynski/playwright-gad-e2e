@@ -35,4 +35,8 @@ export class LearningWelcomePage {
     await expect(this.loginLink).toBeVisible();
     await expect(this.requirementsLink).toBeVisible();
   }
+
+  async openCatalog(): Promise<void> {
+    await this.demoLink.click();
+  }
 }
