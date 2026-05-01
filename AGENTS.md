@@ -185,6 +185,32 @@ Agents MUST NOT:
 - include unrelated changes
 - merge PRs without user approval
 
+## Code review rules
+When asked to review code, agents MUST review for product risk and maintainability, not only surface-level code quality.
+
+Review findings should prioritize:
+
+- correctness bugs, broken user flows, regressions, and missing edge cases
+- test gaps, flaky waiting patterns, hidden test coupling, and assertions that do not prove user-visible behavior
+- scope drift from `docs/mvp-scope.md`, especially changes that implement more than the current scenario
+- selector fragility, unverified selectors, or locators that ignore stable app attributes
+- unnecessary abstractions, premature generalization, unused helpers, and Page Objects that model future scenarios instead of current needs
+- AI slop: vague names, generic comments, filler abstractions, duplicated boilerplate, broad catch-all helpers, and code that looks plausible but is not grounded in the app source
+- readability and maintainability issues that would make the test hard to debug, explain, or extend
+- data isolation problems, destructive side effects, missing cleanup, and assumptions about seeded state
+- security and configuration risks, including committed secrets, hardcoded credentials, or environment-specific paths
+- generated artifacts, report files, screenshots, videos, or unrelated formatting churn
+
+Code review feedback should be specific and actionable:
+
+- lead with findings ordered by severity
+- include file paths and line references where possible
+- explain the user impact or maintenance risk
+- distinguish required fixes from optional suggestions
+- avoid approving code just because it compiles or tests pass
+- avoid requesting broad rewrites when a small focused fix solves the issue
+- call out when code is appropriately simple and no change is needed
+
 ## Agent review checklist (MANDATORY)
 
 Before finishing any task, the agent MUST verify:
